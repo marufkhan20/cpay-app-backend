@@ -8,7 +8,8 @@ const getAllInvoicesBySenderAndReceiver = async (req, res) => {
     const { _id } = req.user || {};
 
     const invoices = await Invoice.find({
-      $or: [{ receiver: _id }, { sender: _id }],
+      // $or: [{ receiver: _id }, { sender: _id }],
+      sender: _id,
     })
       .sort({ updatedAt: -1 })
       .populate("receiver");
@@ -124,15 +125,10 @@ const updateInvoiceStatusController = async (req, res) => {
       { new: true }
     );
 
-    // calculate discount amount
-    const discountAmount =
-      Number(updatedInvoice?.amount) -
-      Number(updatedInvoice?.amount) * +Number("0." + updatedInvoice?.discount);
-
     // update user balance
     if (status === "accepted") {
       const user = await User.findById(_id);
-      user.balance = user?.balance + Number(discountAmount);
+      user.balance = user?.balance + Number(updatedInvoice?.amount);
       await user.save();
     }
 
