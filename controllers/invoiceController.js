@@ -44,6 +44,20 @@ const getInvoiceByCodeController = async (req, res) => {
   }
 };
 
+// get invoice by id controller
+const getInvoiceByIdController = async (req, res) => {
+  try {
+    const { id } = req.params || {};
+    const invoice = await Invoice.findById(id).populate(["receiver", "sender"]);
+    res.status(200).json(invoice);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({
+      error: "Server error occurred!!",
+    });
+  }
+};
+
 // create new invoice controller
 const createNewInvoiceController = async (req, res) => {
   try {
@@ -135,6 +149,7 @@ const updateInvoiceStatusController = async (req, res) => {
 module.exports = {
   getAllInvoicesBySenderAndReceiver,
   getInvoiceByCodeController,
+  getInvoiceByIdController,
   createNewInvoiceController,
   generateInvoiceCodeController,
   updateInvoiceStatusController,

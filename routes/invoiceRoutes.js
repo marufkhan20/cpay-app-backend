@@ -5,6 +5,7 @@ const {
   updateInvoiceStatusController,
   getInvoiceByCodeController,
   getAllInvoicesBySenderAndReceiver,
+  getInvoiceByIdController,
 } = require("../controllers/invoiceController");
 const checkAuth = require("../middlewares/authMiddleware");
 
@@ -13,6 +14,9 @@ router.get("/", checkAuth, getAllInvoicesBySenderAndReceiver);
 
 // get invoice by code
 router.get("/:code", checkAuth, getInvoiceByCodeController);
+
+// get invoice by id
+router.get("/single-invoice/:id", checkAuth, getInvoiceByIdController);
 
 // create new invoice
 router.post("/", checkAuth, createNewInvoiceController);
