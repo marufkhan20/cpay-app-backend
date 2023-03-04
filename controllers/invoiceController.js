@@ -61,7 +61,7 @@ const getInvoiceByIdController = async (req, res) => {
 // create new invoice controller
 const createNewInvoiceController = async (req, res) => {
   try {
-    const { receiver, date, amount, discount, description } = req.body || {};
+    const { receiver, date, amount, description } = req.body || {};
     const { _id } = req.user || {};
 
     // create new invoice
@@ -70,7 +70,6 @@ const createNewInvoiceController = async (req, res) => {
       sender: _id,
       date,
       amount: Number(amount),
-      discount: Number(discount),
       description,
       createdDate: Date.now(),
     });

@@ -15,7 +15,6 @@ const invoiceSchema = new Schema(
       type: Number,
       requried: true,
     },
-    discount: Number,
     description: String,
     code: String,
     status: {
