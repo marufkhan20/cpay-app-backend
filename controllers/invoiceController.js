@@ -77,7 +77,13 @@ const createNewInvoiceController = async (req, res) => {
 
     await newInvoice.save();
 
-    res.status(201).json(newInvoice);
+    // get invoice
+    const invoice = await Invoice.findById(newInvoice?._id).populate([
+      "receiver",
+      "sender",
+    ]);
+
+    res.status(201).json(invoice);
   } catch (err) {
     console.error(err);
     res.status(500).json({
